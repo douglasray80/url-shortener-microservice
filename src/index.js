@@ -5,6 +5,7 @@ import cors from 'cors'
 import dns from 'dns'
 
 import { Counter, Url } from './models'
+import { isUrl } from './utils'
 
 const app = express()
 app.use(cors({ optionSuccessStatus: 200 })) // some legacy browsers choke on 204
@@ -19,6 +20,11 @@ app.get('/', (req, res) => res.sendFile(__dirname + 'index.html'))
 app.post('/api/shorturl/new', (req, res) => {
 	const { url } = req.body
 
+	// validate url
+	if (!isUrl(url)) {
+		console.log('Invalid Url')
+		return res.json({ error: 'Invalid URL' })
+	}
 	console.log(url)
 	// 1. I can POST a URL to `[project_url]/api/shorturl/new`
 	// and I will receive a shortened URL in the JSON response.
