@@ -4,7 +4,8 @@ body {
 }
 
 .page__title,
-.page__subtitle {
+.page__subtitle,
+form {
 	margin: 1em auto;
 	padding-left: 20px;
 	font-family: 'Helvetica Neue', sans-serif;
