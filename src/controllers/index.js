@@ -3,6 +3,24 @@ import dns from 'dns'
 import { Counter, Url } from '../models'
 import { isUrl } from '../utils'
 
+const incrementCount = (req, res, cb) => {
+	Counter.findOneAndUpdate({}, { $inc: { count: 1 } }, (err, data) => {
+		if (err) return null
+		if (data) {
+			cb(data.count)
+		} else {
+			const newCounter = new Counter()
+			newCounter.save(err => {
+				if (err) return null
+				Counter.findOneAndUpdate({}, { $inc: { count: 1 } }, (err, data) => {
+					if (err) return null
+					cb(data.count)
+				})
+			})
+		}
+	})
+}
+
 export const saveUrl = (req, res, next) => {
 	const { url } = req.body
 
@@ -11,6 +29,15 @@ export const saveUrl = (req, res, next) => {
 		console.log('Invalid Url')
 		return res.json({ error: 'Invalid URL' })
 	}
+
+	// dns.lookup(url, err => {
+	// 	if (err) {
+	// 		// no DNS match, invalid Hostname, the URL won't be stored
+	// 		return res.json({ error: 'invalid Hostname' })
+	// 	} else {
+	// 		console.log('url is valid')
+	// 	}
+	// })
 
 	console.log(url)
 	// 1. I can POST a URL to `[project_url]/api/shorturl/new`
