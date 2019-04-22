@@ -1,12 +1,23 @@
 {
-  "name": "url-shortener-microservice",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"name": "url-shortener-microservice",
+	"version": "1.0.0",
+	"description": "freecodecamp - api and microservices projects",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon src/index.js",
+		"start": "node src/index.js"
+	},
+	"keywords": [
+		"node",
+		"express"
+	],
+	"author": "Douglas Ray",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.16.4"
+	},
+	"devDependencies": {
+		"nodemon": "^1.18.11"
+	}
 }
