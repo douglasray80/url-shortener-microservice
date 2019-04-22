@@ -4,8 +4,8 @@
 	"description": "freecodecamp - api and microservices projects",
 	"main": "index.js",
 	"scripts": {
-		"dev": "dotenv -- nodemon src/index.js",
-		"start": "dotenv -- node src/index.js"
+		"dev": "dotenv -- nodemon --exec babel-node src/index.js",
+		"start": "dotenv -- babel-node src/index.js"
 	},
 	"keywords": [
 		"node",
@@ -20,6 +20,10 @@
 		"mongoose": "^5.5.2"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.4.3",
+		"@babel/core": "^7.4.3",
+		"@babel/node": "^7.2.2",
+		"@babel/preset-env": "^7.4.3",
 		"nodemon": "^1.18.11"
 	}
 }

@@ -1,11 +1,12 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const dns = require('dns')
+import express from 'express'
+import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import dns from 'dns'
+
+import { Counter, Url } from './models'
 
 const app = express()
-
 app.use(cors({ optionSuccessStatus: 200 })) // some legacy browsers choke on 204
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -13,12 +14,10 @@ app.use(bodyParser.json())
 
 app.use(express.static('public'))
 
-app.get('/', (req, res) => {
-	res.sendFile(__dirname + 'index.html')
-})
+app.get('/', (req, res) => res.sendFile(__dirname + 'index.html'))
 
 app.post('/api/shorturl/new', (req, res) => {
-	const url = req.body.url
+	const { url } = req.body
 
 	console.log(url)
 	// 1. I can POST a URL to `[project_url]/api/shorturl/new`
@@ -30,15 +29,23 @@ app.post('/api/shorturl/new', (req, res) => {
 	// JSON response will contain an error like `{"error":"invalid URL"}`.
 	// _HINT_: to be sure that the submitted url points to a valid site
 	// you can use the function `dns.lookup(host, cb)` from the `dns` core module.
+	res.json({ original_url: '', short_url: '' })
+})
 
+app.get('/api/shorturl/:short_url', (req, res) => {
+	const { short_url } = req.params
+
+	console.log(short_url)
 	// 3. When I visit the shortened URL, it will
 	// redirect me to my original link.
-	res.json({ original_url: '', short_url: '' })
 })
 
 mongoose.connect(
 	process.env.MONGO_URI,
-	{ useNewUrlParser: true },
+	{
+		useNewUrlParser: true,
+		useCreateIndex: true
+	},
 	(err, db) => {
 		if (err) {
 			console.log('Database error: ' + err)
