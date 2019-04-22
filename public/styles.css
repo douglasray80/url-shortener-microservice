@@ -1,0 +1,19 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.page__title,
+.page__subtitle {
+	margin: 1em auto;
+	padding-left: 20px;
+	font-family: 'Helvetica Neue', sans-serif;
+}
+
+.page__title {
+	font-size: 1.5em;
+}
+
+.page__subtitle {
+	font-size: 1em;
+}
