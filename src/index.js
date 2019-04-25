@@ -15,9 +15,9 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => res.sendFile(__dirname + 'index.html'))
 
-app.post('/api/shorturl/new', saveUrl)
+// app.post('/api/shorturl/new', saveUrl)
 
-app.get('/api/shorturl/:short_url', serveShortUrl)
+// app.get('/api/shorturl/:short_url', serveShortUrl)
 
 mongoose.connect(
 	process.env.MONGO_URI,
