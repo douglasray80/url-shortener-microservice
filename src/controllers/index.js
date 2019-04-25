@@ -72,3 +72,21 @@ export const saveUrl = (req, res) => {
 		res.json({ error: 'invalid URL' })
 	}
 }
+
+export const serveShortUrl = (req, res) => {
+	const shortUrl = req.params.short_url
+	if (!parseInt(shortUrl, 10)) {
+		// The short_url parameter is not a number
+		res.json({ error: 'Wrong Format' })
+		return
+	}
+	Url.findOne({ shortUrl }, (err, data) => {
+		if (err) return
+		if (data) {
+			// redirect to the actual url
+			res.redirect(data.url)
+		} else {
+			res.json({ error: 'No short url found for given input' })
+		}
+	})
+}
